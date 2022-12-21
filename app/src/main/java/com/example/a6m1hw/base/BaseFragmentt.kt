@@ -1,5 +1,6 @@
 package com.example.a6m1hw.base
 
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 
 
-abstract class BaseFragment<VB: ViewBinding, VM: ViewModel> : Fragment() {
+abstract class BaseFragmentt<VB: ViewBinding, VM: BaseViewModel> : Fragment() {
 
     protected lateinit var binding: VB
     protected abstract val viewModel: VM
