@@ -1,7 +1,6 @@
-package com.example.a6m1hw.data
+package com.example.a6m1hw.data.remote
 
 import com.example.a6m1hw.BuildConfig
-import com.example.a6m1hw.data.remote.ApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

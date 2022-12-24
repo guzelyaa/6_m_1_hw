@@ -11,8 +11,15 @@ interface ApiService {
     @GET("playlists")
     fun getPlaylist(
         @Query("part") part: String = Constant.PART,
-        @Query("channelId") channelId:String = Constant.CHANNEL_ID,
-        @Query("maxResults") maxResults:String = Constant.MAX_RESULTS,
-        @Query("key") key:String = BuildConfig.API_KEY,
-    ):Call<Playlist>
+        @Query("channelId") channelId: String = Constant.CHANNEL_ID,
+        @Query("maxResults") maxResults: String = Constant.MAX_RESULTS,
+        @Query("key") key: String = BuildConfig.API_KEY,
+    ): Call<Playlist>
+
+    @GET("playlistItems")
+    fun getPlaylistItems(
+        @Query("part") part: String = Constant.PART,
+        @Query("playlistId") playlistId: String,
+        @Query("maxResults") maxResults: String = Constant.MAX_RESULTS,
+    ): Call<Playlist>
 }

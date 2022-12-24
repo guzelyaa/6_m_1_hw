@@ -1,5 +1,6 @@
 package com.example.a6m1hw.ui.detail
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
@@ -8,7 +9,12 @@ import com.example.a6m1hw.databinding.FragmentDetailBinding
 import com.example.a6m1hw.ui.playlist.PlaylistViewModel
 
 
-class DetailFragment : BaseFragmentt<FragmentDetailBinding, PlaylistViewModel>() {
+class DetailFragment : BaseFragmentt<FragmentDetailBinding, DetailViewModel>() {
+
+    override val viewModel: DetailViewModel by lazy {
+        ViewModelProvider(this)[DetailViewModel::class.java]
+    }
+
     override fun inflateViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -21,12 +27,12 @@ class DetailFragment : BaseFragmentt<FragmentDetailBinding, PlaylistViewModel>()
     }
 
     override fun initView() {
-
+        val id = arguments?.getString("id")
+        viewModel.getPlaylistItems(id.toString()).observe(viewLifecycleOwner,{
+            Log.e("ololo", "initView: "+it )
+        })
     }
 
-    override val viewModel: PlaylistViewModel by lazy {
-        ViewModelProvider(this)[PlaylistViewModel::class.java]
-    }
 
 
 }
