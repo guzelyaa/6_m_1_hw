@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 
 
-abstract class BaseFragmentt<VB: ViewBinding, VM: BaseViewModel> : Fragment() {
+abstract class BaseFragmentt<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
 
     protected lateinit var binding: VB
     protected abstract val viewModel: VM
@@ -27,13 +27,17 @@ abstract class BaseFragmentt<VB: ViewBinding, VM: BaseViewModel> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkInternet()
         initView()
         initListener()
         initViewModel()
     }
 
+
     abstract fun initView()
-    open fun initListener(){}
-    open fun initViewModel(){}
+    open fun initListener() {}
+    open fun initViewModel() {}
+    open fun checkInternet() {}
+
 
 }
