@@ -7,13 +7,14 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.a6m1hw.App
 import com.example.a6m1hw.R
-import com.example.a6m1hw.base.BaseFragmentt
+import com.example.a6m1hw.base.BaseFragment
 import com.example.a6m1hw.databinding.FragmentPlaylistBinding
 import com.example.a6m1hw.ui.playlist.adapter.PlaylistAdapter
 import com.example.a6m1hw.utils.isOnline
 
-class PlaylistFragment : BaseFragmentt<FragmentPlaylistBinding, PlaylistViewModel>() {
+class PlaylistFragment : BaseFragment<FragmentPlaylistBinding, PlaylistViewModel>() {
 
     private val adapter: PlaylistAdapter by lazy {
         PlaylistAdapter(this::onClick)
@@ -51,6 +52,7 @@ class PlaylistFragment : BaseFragmentt<FragmentPlaylistBinding, PlaylistViewMode
         super.initViewModel()
         viewModel.getPlaylist().observe(viewLifecycleOwner) {
             Log.e("ololo", "initViewModel: " + it)
+            App.db.dao().insertPlaylist(it)
             adapter.addData(it.items)
         }
         binding.recyclerPlaylist.adapter = adapter

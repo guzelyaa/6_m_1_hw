@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 
 
-abstract class BaseFragmentt<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
+abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> : Fragment() {
 
     protected lateinit var binding: VB
     protected abstract val viewModel: VM

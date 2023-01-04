@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -67,4 +68,11 @@ dependencies {
     /*Interceptor*/
     implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.2"
     implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2"
+
+    //Room
+    def room_version = "2.4.3"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    // To use Kotlin annotation processing tool (kapt)
+    kapt "androidx.room:room-compiler:$room_version"
 }
