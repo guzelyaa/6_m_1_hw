@@ -3,9 +3,11 @@ package com.example.a6m1hw.ui.detail
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.a6m1hw.base.BaseFragment
 import com.example.a6m1hw.databinding.FragmentDetailBinding
+import com.example.a6m1hw.network.Status
 
 
 class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
@@ -27,11 +29,25 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
 
     override fun initView() {
         val id = arguments?.getString("id")
-        viewModel.getPlaylistItems(id.toString()).observe(viewLifecycleOwner,{
-            Log.e("ololo", "initView: "+it )
-        })
+        viewModel.getPlaylistItem(id.toString()).observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    viewModel.loading.value = false
+                    Log.e("ololo", "initView: " + it.data)
+                }
+                Status.LOADING -> {
+                    viewModel.loading.value = true
+                }
+                Status.ERROR -> {
+                    viewModel.loading.value = false
+                    Log.e("ololo", "initViewModel: " + it.msg)
+                }
+            }
+        }
+        viewModel.loading.observe(viewLifecycleOwner){
+            binding.progressBar.isVisible = it
+        }
     }
-
 
 
 }
