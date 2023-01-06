@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.a6m1hw.model.Playlist
 
-@Database(entities = [Playlist::class], version = 1)
+@Database(entities = [Playlist::class], version = 2)
 @TypeConverters(Converter::class)
 abstract class AppDatabase:RoomDatabase() {
     abstract fun dao():PlaylistDao

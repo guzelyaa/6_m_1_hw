@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
+import com.example.a6m1hw.App
+import com.example.a6m1hw.model.Item
 import com.example.a6m1hw.model.Playlist
 import com.example.a6m1hw.network.Resource
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +29,8 @@ class Repository {
         }
     }
 
-    fun getPlaylistItems(playlistId: String): LiveData<Resource<Playlist>> = liveData(Dispatchers.IO) {
+    fun getPlaylistItems(playlistId: String): LiveData<Resource<Playlist>> =
+        liveData(Dispatchers.IO) {
             emit(Resource.loading())
             val result = apiService.getPlaylistItems(playlistId = playlistId)
 
@@ -37,4 +40,20 @@ class Repository {
                 emit(Resource.error(result.message()))
             }
         }
+
+    fun setPlaylistDB(playlist: Playlist): LiveData<Resource<Boolean>> = liveData(Dispatchers.IO) {
+        emit(Resource.loading())
+        App.db.dao().insertPlaylist(playlist)
+        emit(Resource.success(true))
+    }
+
+    fun getPlaylistDB(): LiveData<Resource<Playlist>> = liveData(Dispatchers.IO) {
+        emit(Resource.loading())
+        val result = App.db.dao().getPlaylist()
+        if (result != null) {
+            emit(Resource.success(result))
+        } else {
+            emit(Resource.error("Empty data"))
+        }
+    }
 }
