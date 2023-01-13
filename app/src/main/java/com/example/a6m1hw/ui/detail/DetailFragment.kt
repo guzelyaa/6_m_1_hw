@@ -3,18 +3,27 @@ package com.example.a6m1hw.ui.detail
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.a6m1hw.R
 import com.example.a6m1hw.base.BaseFragment
 import com.example.a6m1hw.databinding.FragmentDetailBinding
+import com.example.a6m1hw.model.Item
 import com.example.a6m1hw.network.Status
+import com.example.a6m1hw.ui.detail.adapter.DetailAdapter
+import com.example.a6m1hw.ui.playlist.adapter.PlaylistAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
 
-    override val viewModel: DetailViewModel by lazy {
-        ViewModelProvider(this)[DetailViewModel::class.java]
+    private val adapter: DetailAdapter by lazy {
+        DetailAdapter(this::onClick, requireContext())
     }
+
+    override val viewModel: DetailViewModel by viewModel()
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -28,12 +37,12 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
     }
 
     override fun initView() {
-        val id = arguments?.getString("id")
-        viewModel.getPlaylistItem(id.toString()).observe(viewLifecycleOwner) {
+        val item = arguments?.getSerializable("item") as Item
+        viewModel.getPlaylistItem(item.id.toString()).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
                     viewModel.loading.value = false
-                    Log.e("ololo", "initView: " + it.data)
+                    adapter.addData(it.data?.items)
                 }
                 Status.LOADING -> {
                     viewModel.loading.value = true
@@ -47,6 +56,15 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
         viewModel.loading.observe(viewLifecycleOwner){
             binding.progressBar.isVisible = it
         }
+        val count = item.contentDetails?.itemCount
+        binding.videoNumber.text = getString(R.string.video_count, count)
+        binding.tvPlaylistName.text = item.snippet?.title
+        binding.recyclerPlaylist.adapter = adapter
+    }
+
+
+    private fun onClick(item: Item) {
+
     }
 
 

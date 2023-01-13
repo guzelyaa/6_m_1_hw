@@ -13,10 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Repository {
-    private val apiService: ApiService by lazy {
-        RetrofitClient.create()
-    }
+class Repository(private val apiService: ApiService) {
 
     fun getPlaylist(): LiveData<Resource<Playlist>> = liveData(Dispatchers.IO) {
         emit(Resource.loading())

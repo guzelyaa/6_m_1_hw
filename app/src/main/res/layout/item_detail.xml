@@ -18,6 +18,7 @@
             android:id="@+id/iv_video"
             android:layout_width="120dp"
             android:layout_height="80dp"
+            android:scaleType="centerCrop"
             android:src="@color/dark_gray" />
 
     </androidx.cardview.widget.CardView>

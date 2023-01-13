@@ -11,20 +11,20 @@ import com.example.a6m1hw.App
 import com.example.a6m1hw.R
 import com.example.a6m1hw.base.BaseFragment
 import com.example.a6m1hw.databinding.FragmentPlaylistBinding
+import com.example.a6m1hw.model.Item
 import com.example.a6m1hw.network.Status
 import com.example.a6m1hw.ui.playlist.adapter.PlaylistAdapter
 import com.example.a6m1hw.utils.isOnline
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import javax.security.auth.login.LoginException
 
 class PlaylistFragment : BaseFragment<FragmentPlaylistBinding, PlaylistViewModel>() {
 
     private val adapter: PlaylistAdapter by lazy {
-        PlaylistAdapter(this::onClick)
+        PlaylistAdapter(this::onClick, requireContext())
     }
 
-    override val viewModel: PlaylistViewModel by lazy {
-        ViewModelProvider(this)[PlaylistViewModel::class.java]
-    }
+    override val viewModel: PlaylistViewModel by viewModel()
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -97,8 +97,8 @@ class PlaylistFragment : BaseFragment<FragmentPlaylistBinding, PlaylistViewModel
         binding.recyclerPlaylist.adapter = adapter
     }
 
-    private fun onClick(id: String) {
-        findNavController().navigate(R.id.detailFragment, bundleOf("id" to id))
+    private fun onClick(item: Item) {
+        findNavController().navigate(R.id.detailFragment, bundleOf("item" to item))
     }
 
 }

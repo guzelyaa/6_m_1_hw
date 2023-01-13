@@ -7,15 +7,14 @@ import androidx.lifecycle.switchMap
 import com.example.a6m1hw.base.BaseViewModel
 import com.example.a6m1hw.data.remote.ApiService
 import com.example.a6m1hw.data.remote.Repository
-import com.example.a6m1hw.data.remote.RetrofitClient
 import com.example.a6m1hw.model.Playlist
 import com.example.a6m1hw.network.Resource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PlaylistViewModel : BaseViewModel() {
-    private val repo = Repository()
+class PlaylistViewModel(private val repo: Repository) : BaseViewModel() {
+
 
     private val setPlaylistLiveData = MutableLiveData<Playlist>()
 
